@@ -1,35 +1,33 @@
 #include "libftprintf.h"
 #include <stdlib.h>
 
-static char	*Convert(unsigned long hex, char *str, int size)
+static char	*Convert(unsigned int hex, char *str, int size)
 {
 	int	digit;
-	int	i;
 	
 	digit = 0;
-	str[0] = '0';
-	str[1] = 'x';
-	str[size - 1] = '\0';
-	i = 0;
+	size = size - 2;
 	while (hex)
 	{
 		digit = hex % 16;
 		if (digit < 10)
-			str[size - (++i)] = digit + '0';
+			str[size] = digit + '0';
 		else
-			str[size - (++i)] = (digit - 10 + 'a');
+			str[size] = (digit - 10) + 'a';
+		size --;
 		hex /= 16;
 	}
+	str[size - 1] = '\0';
 	return (str);
 }
 
-char	*ft_hextostr_low(unsigned long hex)
+char	*ft_hextostr_low(unsigned int hex)
 {
 	int		size;
 	char	*str;
 
-	size = ft_get_hex_digit_count(hex);
-	str = (char *)malloc(size + 3);
+	size = ft_get_hex_digit_count(hex) + 1;
+	str = (char *)malloc(size);
 	if (!str)
 		return (0);
 	return (Convert(hex, str, size));

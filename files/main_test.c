@@ -14,14 +14,19 @@
 #include "libftprintf.h"
 #include "stdio.h"
 
+#define HEX 0x1234abcd
+
 int	ft_printf(char	*format, ...);
 
 int	main(void)
 {
-	int	deneme;
-	
-	deneme = 5;
-	printf("%s\n", ft_hextostr_low((unsigned long)&deneme));
+
+	printf("%x\n", HEX);
+	ft_printf("%x\n", HEX);
+	ft_printf("%X\n-----\n", HEX);
+	printf("%p\n",&ft_printf);
+	ft_printf("%p\n",&ft_printf);
+	ft_printf("%u\n", 4294967295);
 	//ft_printf("Ad: %s\nYas: %d\nCinsiyet: %c\n", "Recep", 22, 'E');
 	//ft_printf("Deneme Adress: %p", &deneme);
 	return (0);
