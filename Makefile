@@ -1,45 +1,30 @@
+NAME = libftprintf.a
+FT_PRINTF = ./ft_printf
+
+SRCS_PRINTF = ft_hxdigit_count.c ft_printf.c ft_put_un_nbr.c ft_putaddress.c \
+				ft_putchar.c ft_putnbr.c ft_putstr.c ft_putx_low.c ft_putx_up.c
+OBJS_PRINTF = $(SRCS_PRINTF:.c=.o)
+
+AR = ar rcs
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-NAME = libftprintf.a
-SRCS = $(filter-out ./files/main_test.c, $(wildcard ./files/*.c))
-OBJS = $(SRCS:.c=.o)
+RM = rm -rf
 
-LIBS = -L./libft -lft
-LIBFT_OBJS = $(filter-out ./libft/main_test.o, $(wildcard ./libft/*.o))
+# ------------  RULES  ------------------------------------------------------- #
+.PHONY : all clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	make -C ./libft
-	ar rcs $(NAME) $(OBJS) $(LIBFT_OBJS)
+$(NAME): $(OBJS_PRINTF)
+			@$(AR) $(NAME) $(OBJS_PRINTF)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+%.o: $(FT_PRINTF)/%.c
+			@$(CC) $(CFLAGS) -c $< -o $@
 
-clean: 
-	rm -rf $(OBJS)
-	make clean -C ./libft
+clean:
+			@$(RM) $(OBJS_PRINTF)
 
-fclean: clean
-	make fclean -C ./libft
-	rm -rf $(NAME)
+fclean:	clean
+			@$(RM) $(NAME)
 
-re: fclean all
-
-test: $(OBJS)
-	make -C ./libft
-	@$(CC) $(CFLAGS) $(OBJS) ./files/main_test.c -o program $(LIBS)
-	@echo Derleme Tamamlandı
-
-.PHONY : all clean fclean re bonus test info
-
-info:
-	@echo
-	@echo "	 [info | all | bonus | clean | fclean | re | test]"
-	@echo
-	@echo "		info: displays informations"
-	@echo "		all: compile the library"
-	@echo "		clean: remove object files"
-	@echo "		fclean: remove object files and archive library"
-	@echo "		re: fclean and all"
-	@echo "		test: create the test program"
+re : fclean all
