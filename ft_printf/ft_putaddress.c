@@ -6,7 +6,7 @@
 /*   By: mcekici <mcekici@student.42kocaeli.com.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 02:41:36 by mcekici           #+#    #+#             */
-/*   Updated: 2024/11/05 03:00:40 by mcekici          ###   ########.fr       */
+/*   Updated: 2024/12/26 12:58:22 by mcekici          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ static void	recursive_printaddress(unsigned long adr, int *sum)
 
 void	ft_putaddress(void *address, int *sum)
 {
+	if (address == (void *)0)
+	{
+		(*sum) += ft_putstr("(nil)");
+		return ;
+	}
 	(*sum) += ft_putstr("0x");
 	if (!address)
 		(*sum) += ft_putchar('0');
