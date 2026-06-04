@@ -1,12 +1,13 @@
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:00599C,100:023e8a&height=180&section=header&text=ft_printf&fontSize=55&fontColor=fff&animation=fadeIn&fontAlignY=36" width="100%"/>
+
 <div align="center">
 
-# ft_printf
-
-**C standart kütüphanesindeki `printf()` fonksiyonunun sıfırdan yeniden uygulaması.**
-
-[![Language](https://img.shields.io/badge/language-C-00599C?style=for-the-badge&logo=c)](https://en.wikipedia.org/wiki/C_(programming_language))
+[![Language](https://img.shields.io/badge/language-C-00599C?style=for-the-badge&logo=c&logoColor=white)](https://en.wikipedia.org/wiki/C_(programming_language))
 [![School](https://img.shields.io/badge/42-Kocaeli-00BABC?style=for-the-badge)](https://42kocaeli.com.tr/)
 [![Norm](https://img.shields.io/badge/norminette-passing-brightgreen?style=for-the-badge)](https://github.com/42School/norminette)
+![Visitor](https://visitor-badge.laobi.icu/badge?page_id=Sayicon.ft_printf)
+
+**C standart kütüphanesindeki `printf()` fonksiyonunun sıfırdan yeniden uygulaması.**
 
 </div>
 
@@ -23,16 +24,16 @@ Fonksiyon, orijinal `printf` gibi **yazdırılan karakter sayısını** döndür
 ## Desteklenen Format Belirteçleri
 
 | Belirteç | Açıklama | Örnek Girdi | Çıktı |
-|----------|----------|------------|-------|
+|:--------:|----------|------------|-------|
 | `%c` | Tek karakter | `'A'` | `A` |
 | `%s` | String | `"hello"` | `hello` |
 | `%d` | Ondalık tamsayı (int) | `42` | `42` |
 | `%i` | Tamsayı | `-7` | `-7` |
 | `%u` | İşaretsiz tamsayı | `4294967295` | `4294967295` |
-| `%x` | Onaltılık (küçük harf) | `255` | `ff` |
-| `%X` | Onaltılık (büyük harf) | `255` | `FF` |
+| `%x` | Onaltılık küçük harf | `255` | `ff` |
+| `%X` | Onaltılık büyük harf | `255` | `FF` |
 | `%p` | Pointer adresi | `ptr` | `0x7ffd...` |
-| `%%` | Yüzde işareti | `%%` | `%` |
+| `%%` | Yüzde işareti literal | `%%` | `%` |
 
 ---
 
@@ -55,7 +56,7 @@ int main(void)
 {
     int count;
 
-    ft_printf("Merhaba, %s!\n", "dünya");
+    ft_printf("Merhaba, %s!\n", "dunya");
     ft_printf("Sayi: %d\n", 42);
     ft_printf("Hex: %x | %X\n", 255, 255);
     ft_printf("Adres: %p\n", (void *)&count);
@@ -73,7 +74,7 @@ gcc -Wall -Wextra -Werror main.c ft_printf/libftprintf.a -o program
 
 **Çıktı:**
 ```
-Merhaba, dünya!
+Merhaba, dunya!
 Sayi: 42
 Hex: ff | FF
 Adres: 0x7ffd5a3b2c10
@@ -105,20 +106,21 @@ ft_printf/
 
 ## Nasıl Çalışır?
 
-`ft_printf` format string'i karakter karakter okur:
+`ft_printf` format string'i karakter karakter okur ve `%` karakterine ulaşınca ilgili yardımcı fonksiyonu çağırır:
 
 ```
-ft_printf("%s has %d items.\n", "list", 5)
-           │         │
-           ▼         ▼
-      ft_putstr()  ft_putnbr()
+ft_printf("%s has %d items at %p\n", "list", 5, ptr)
+                │         │         │
+                ▼         ▼         ▼
+          ft_putstr()  ft_putnbr() ft_putaddress()
 ```
 
-1. `%` karakteri görülene kadar doğrudan yaz
+1. `%` görülene kadar karakteri doğrudan `write()` ile yaz
 2. `%` görülünce sonraki belirteci oku
-3. `va_arg` ile ilgili argümanı al
+3. `va_arg` ile değişken argüman listesinden ilgili değeri al
 4. Belirtece özel yardımcı fonksiyonu çağır
-5. Yazdırılan karakter sayısını topla ve döndür
+5. Her fonksiyon yazdırdığı karakter sayısını `sum` değişkenine ekler
+6. `ft_printf` toplam karakter sayısını döndürür
 
 ---
 
@@ -143,8 +145,8 @@ make re     # temizle ve yeniden derle
 
 <div align="center">
 
-*42 Kocaeli — ft_printf projesi*
-
-[![GitHub](https://img.shields.io/badge/GitHub-Sayicon-181717?style=flat-square&logo=github)](https://github.com/Sayicon)
+[![GitHub](https://img.shields.io/badge/GitHub-Sayicon-181717?style=for-the-badge&logo=github)](https://github.com/Sayicon)
 
 </div>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:023e8a,100:00599C&height=100&section=footer" width="100%"/>
